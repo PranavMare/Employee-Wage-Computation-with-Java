@@ -4,26 +4,28 @@ public class EmployeeWageComputation {
 	public static void main(String[] args) {
 		
 		int empRatePerHour=20;
-		int empHrs=0;
 		int wage=0;
-		
-		for(int i=0;i<30;i++) {
+		int totalWorkdays=0;
+		int totalWorkHours=0;
+		for(int i=0;i<31;i++) {
+			if(totalWorkdays>=20 || totalWorkHours>=100)break;
+			
 			int empCheck=(int)(Math.random()*10%3);
 			switch(empCheck) {
 			case 1:
-				empHrs=8;
-				wage+=empHrs*empRatePerHour;
+				totalWorkHours+=8;
+				wage+=8*empRatePerHour;
+				totalWorkdays++;
 				break;
 			case 2:
-				empHrs=4;
-				wage+=empHrs*empRatePerHour;
+				totalWorkHours+=4;
+				wage+=4*empRatePerHour;
+				totalWorkdays++;
 				break;
 			}
-		}
-		
-		System.out.println(wage);	
+		}	
+		System.out.println(wage);
 	}
-	
 }
 
 
