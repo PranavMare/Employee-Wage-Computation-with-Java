@@ -1,40 +1,50 @@
 
 public class EmployeeWageComputation {
 
-		public static int calucalateWage(int empCheck,int empRatePerHour){
-			int wage=0;
-			switch(empCheck) {
-				case 1:
-					wage=8*empRatePerHour;
-					break;
-				case 2:
-					wage=4*empRatePerHour;
-					break;
-			}
-			return wage;
-		}
-
-	public static void main(String[] args) {
-
-		int empRatePerHour=20;
-		int wage=0;
-		int totalWorkdays=0;
-		int totalWorkHours=0;
-		for(int i=0;i<31;i++) {
-			if(totalWorkdays>=20 || totalWorkHours>=100)break;
-
+	public static final int IS_PART_TIME =1;
+	public static final int IS_FULL_TIME= 2;
+	
+	private final String company;
+	private final int empRateHours;
+	private final int numofWorkDays;
+	private final int maxHoursperMonth;
+	
+	public EmployeeWageComputation(String company, int empRateHours, int numofWorkDays,int maxHoursperMonth) {
+		this.company=company;
+		this.empRateHours=empRateHours;
+		this.maxHoursperMonth=maxHoursperMonth;
+		this.numofWorkDays=numofWorkDays;
+	}
+	
+	private int computeEmpWage() {
+		//variables
+		int empHrs=0,totalEmpHours=0,totalWorkDays=0;
+		//computation
+		while(totalEmpHours<=maxHoursperMonth && totalWorkDays< numofWorkDays ) {
+			totalWorkDays++;
 			int empCheck=(int)(Math.random()*10%3);
-			/* empCheck=1---->Full Time
-			   empCheck=2---->Part Time */
-			wage+= calucalateWage(empCheck,empRatePerHour);
-
-			if(empCheck==1)totalWorkHours+=8;
-			if(empCheck==2)totalWorkHours+=4;
-			if(empCheck==1||empCheck==2)totalWorkdays++;
+			switch(empCheck) {
+			case IS_PART_TIME:
+				empHrs=4;
+				break;
+			case IS_FULL_TIME:
+				empHrs=8;
+				break;
+			default:
+				empHrs=0;
+			}
+			totalEmpHours+=empHrs;
+			System.out.println("Day: "+ totalWorkDays+" Emp Hrs: "+empHrs);
 		}
-		System.out.println(wage);
-		System.out.println(totalWorkHours);
-		System.out.println(totalWorkdays);
+		System.out.println("Total Employee working Hours: "+totalEmpHours);
+		return totalEmpHours*empRateHours;
+	}
+	
+	public static void main(String[] args) {
+		EmployeeWageComputation dMart = new EmployeeWageComputation("DMart",20,30,100);
+		EmployeeWageComputation Relaince = new EmployeeWageComputation("Reliance",30,30,100);
+		System.out.println("Total Employee Wage for "+dMart.company+": "+dMart.computeEmpWage());
+		System.out.println("Total Employee Wage for "+Relaince.company+": "+Relaince.computeEmpWage());
 	}
 }
 
